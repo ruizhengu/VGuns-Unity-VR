@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.XR.Interaction.Toolkit;
+
 
 public class HandHider : MonoBehaviour
 {
     public GameObject handObject = null;
 
-    private XRDirectInteractor interactor = null;
+    private UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor interactor = null;
 
     public SkinnedMeshRenderer HandMesh = null;
     
@@ -16,31 +16,31 @@ public class HandHider : MonoBehaviour
 
     private void Awake()
     {
-        interactor = GetComponent<XRDirectInteractor>();
+        interactor = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor>();
         HandMesh = handObject.GetComponent<SkinnedMeshRenderer>();
     }
 
     private void OnEnable()
     {
-        interactor.onSelectEntered.AddListener(Hide);
-        interactor.onSelectExited.AddListener(Show);
+        interactor.selectEntered.AddListener(Hide);
+        interactor.selectExited.AddListener(Show);
     }
 
     private void OnDisable()
     {
-        interactor.onSelectEntered.RemoveListener(Hide);
-        interactor.onSelectExited.RemoveListener(Show);
+        interactor.selectEntered.RemoveListener(Hide);
+        interactor.selectExited.RemoveListener(Show);
     }
     
     
-    private void Show(XRBaseInteractable interactable)
+    private void Show(UnityEngine.XR.Interaction.Toolkit.SelectExitEventArgs args)
     {
         HandMesh.enabled = true;
         SphereCollider_1.enabled = true;
         SphereCollider_2.enabled = true;
     }
 
-    private void Hide(XRBaseInteractable interactable)
+    private void Hide(UnityEngine.XR.Interaction.Toolkit.SelectEnterEventArgs args)
     {
         HandMesh.enabled = false;
         SphereCollider_1.enabled = false;

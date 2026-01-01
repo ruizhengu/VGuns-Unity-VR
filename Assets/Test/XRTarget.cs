@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -50,7 +49,7 @@ public class XRTarget : MonoBehaviour {
                 
                 StartCoroutine(Wait());
                 
-                SceneManager.LoadScene(0);
+                //SceneManager.LoadScene(0);
             }
             else
             {
@@ -76,7 +75,7 @@ public class XRTarget : MonoBehaviour {
                     
                     StartCoroutine(Wait());
 
-                    SceneManager.LoadScene(0);
+                    //SceneManager.LoadScene(0);
                 }
 
             }

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.XR.Interaction.Toolkit;
+
 using XRController = UnityEngine.InputSystem.XR.XRController;
 
 
@@ -11,11 +11,11 @@ public class TeleportationManager : MonoBehaviour
 
     [SerializeField] public InputActionReference activate;
 
-    [SerializeField] public XRRayInteractor _RayInteractor;
+    [SerializeField] public UnityEngine.XR.Interaction.Toolkit.Interactors.XRRayInteractor _RayInteractor;
 
     [SerializeField] public GameObject teleportable;
     
-    [SerializeField] public TeleportationProvider _teleportationProvider;
+    [SerializeField] public UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation.TeleportationProvider _teleportationProvider;
 
     void Start()
 
@@ -44,7 +44,7 @@ public class TeleportationManager : MonoBehaviour
 
         {
 
-            TeleportRequest teleportRequest = new TeleportRequest();
+            UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation.TeleportRequest teleportRequest = new UnityEngine.XR.Interaction.Toolkit.Locomotion.Teleportation.TeleportRequest();
 
             teleportRequest.destinationPosition = ray.point;
 

@@ -2,13 +2,92 @@ using UnityEngine;
 using System.Threading;
 using TMPro;
 using UnityEngine;
-using UnityEngine;
 using System.Collections;
-using Guns;
 using UnityEngine.XR.Interaction.Toolkit;
 using Random = UnityEngine.Random;
+//using VRExplorer;
+using System.Diagnostics.CodeAnalysis;
+//using BNG;
 
-public class Gun : MonoBehaviour {
+public class Gun : MonoBehaviour //, IGrabbableEntity, ITriggerableEntity
+{
+    [ExcludeFromCodeCoverage] public float TriggeringTime => 2.5f;
+    //[ExcludeFromCodeCoverage] public string Name => Str.Triggerable;
+
+    /*
+    [ExcludeFromCodeCoverage]
+    public void Triggerring()
+    {
+        var obj = EntityManager.Instance.vrexplorerMono.gameObject;
+        UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor interactor;
+        if(!obj.TryGetComponent(out interactor))
+        {
+            interactor = obj.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor>();
+        }
+        if(!obj.GetComponent<ActionBasedController>())
+        {
+            obj.AddComponent<ActionBasedController>();
+        }
+        var interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>();
+        var e = new SelectEnterEventArgs() { interactorObject = interactor };
+        var h = new HoverEnterEventArgs() { interactorObject = interactor };
+        var a = new ActivateEventArgs() { interactorObject = interactor };
+        interactable.selectEntered.Invoke(e);
+        interactable.hoverEntered.Invoke(h);
+        interactable.firstSelectEntered.Invoke(e);
+        interactable.firstHoverEntered.Invoke(h);
+        interactable.activated.Invoke(a);
+    }
+
+    [ExcludeFromCodeCoverage]
+    public void Triggerred()
+    {
+        var obj = EntityManager.Instance.vrexplorerMono.gameObject;
+        UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor interactor;
+        if(!obj.TryGetComponent(out interactor))
+        {
+            interactor = obj.AddComponent<UnityEngine.XR.Interaction.Toolkit.Interactors.XRDirectInteractor>();
+        }
+        if(!obj.GetComponent<ActionBasedController>())
+        {
+            obj.AddComponent<ActionBasedController>();
+        }
+        var e = new SelectExitEventArgs() { interactorObject = interactor };
+        var h = new HoverExitEventArgs() { interactorObject = interactor };
+        var a = new DeactivateEventArgs() { interactorObject = interactor };
+        var interactable = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRBaseInteractable>();
+        interactable.selectExited.Invoke(e);
+        interactable.hoverExited.Invoke(h);
+        interactable.lastSelectExited.Invoke(e);
+        interactable.lastHoverExited.Invoke(h);
+        interactable.deactivated.Invoke(a);
+
+    }
+
+    [ExcludeFromCodeCoverage]
+    public Grabbable Grabbable
+    {
+        get
+        {
+            var g = GetComponent<Grabbable>();
+            if(g) return g;
+            return gameObject.AddComponent<Grabbable>();
+        }
+    }
+    */
+
+    [ExcludeFromCodeCoverage] public Transform Destination => null;
+
+    [ExcludeFromCodeCoverage]
+    public void OnGrabbed()
+    {
+    }
+
+    [ExcludeFromCodeCoverage]
+    public void OnReleased()
+    {
+    }
+
     public enum ShootState {
         Ready,
         Shooting,
@@ -16,7 +95,7 @@ public class Gun : MonoBehaviour {
     }
     
     // The Gun
-    XRGrabInteractable m_InteractableBase;
+    UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable m_InteractableBase;
     
     //Gun Colliders
     //public Collider Gun_Collider_Physical = null;
@@ -94,7 +173,7 @@ public class Gun : MonoBehaviour {
         }
         
         //m_Animator = GetComponent<Animator>(); //(For Animations Down the line)
-        m_InteractableBase = GetComponent<XRGrabInteractable>();
+        m_InteractableBase = GetComponent<UnityEngine.XR.Interaction.Toolkit.Interactables.XRGrabInteractable>();
         m_InteractableBase.selectExited.AddListener(DroppedGun);
         m_InteractableBase.activated.AddListener(TriggerPulled);
         m_InteractableBase.deactivated.AddListener(TriggerReleased);
@@ -135,7 +214,7 @@ public class Gun : MonoBehaviour {
                 ));
 
                 Rigidbody rb = spawnedRound.GetComponent<Rigidbody>();
-                rb.velocity = spawnedRound.transform.forward * roundSpeed;
+                rb.linearVelocity = spawnedRound.transform.forward * roundSpeed;
             }
 
             remainingAmmunition--;
@@ -238,6 +317,6 @@ public class Gun : MonoBehaviour {
         //Message
         //Debug.Log("Magazine Has Been Removed"); 
     }
-    
+
 
 }
